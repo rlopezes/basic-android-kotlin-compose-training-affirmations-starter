@@ -33,7 +33,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -70,13 +69,13 @@ fun AffirmationsApp() {
 @Composable
 fun AffirmationList(affirmationList: List<Affirmation>, modifier: Modifier = Modifier) {
     LazyColumn(modifier = modifier) {
-        //items(items=affirmationList, itemContent={affirmation ->
-        items(affirmationList) { affirmation ->
-            AffirmationCard(
+        //items(affirmationList) { affirmation ->
+        items(items = affirmationList,
+              itemContent = {affirmation -> AffirmationCard(
                 affirmation = affirmation,
-                modifier = Modifier.padding(8.dp)
-            )
-        }
+                modifier = Modifier.padding(8.dp))
+              }
+        )
     }
 }
 
@@ -104,6 +103,11 @@ fun AffirmationCard(affirmation: Affirmation, modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun AffirmationAppPreview() {
-    //AffirmationCard(Affirmation(R.string.affirmation1, R.drawable.image1))
     AffirmationsApp()
+}
+
+@Preview
+@Composable
+private fun OneAffirmationPreview() {
+    AffirmationCard(Affirmation(R.string.affirmation1, R.drawable.image1))
 }
