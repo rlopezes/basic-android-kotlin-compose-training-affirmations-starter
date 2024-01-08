@@ -62,20 +62,26 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AffirmationsApp() {
     AffirmationList(
+        //Llama a la clase Datasource que devuelve todos los datos a mostrar
+        //PATRÓN DE DISEÑO MVC
         affirmationList = Datasource().loadAffirmations(),
     )
 }
 
 @Composable
 fun AffirmationList(affirmationList: List<Affirmation>, modifier: Modifier = Modifier) {
+    //Columna con scroll
     LazyColumn(modifier = modifier) {
-        //items(affirmationList) { affirmation ->
         items(items = affirmationList,
-              itemContent = {affirmation -> AffirmationCard(
-                affirmation = affirmation,
-                modifier = Modifier.padding(8.dp))
-              }
+              //Para cada item llama a la función AffirmationCard
+              itemContent = {affirmation ->
+                                AffirmationCard(
+                                    affirmation = affirmation,
+                                    modifier = Modifier.padding(8.dp)
+                                )
+                            }
         )
+        //items(affirmationList) { affirmation ->
     }
 }
 
@@ -89,7 +95,7 @@ fun AffirmationCard(affirmation: Affirmation, modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(194.dp),
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Crop //Ocupa el espacio disponible
             )
             Text(
                 text = stringResource(affirmation.stringResourceId),
@@ -109,5 +115,7 @@ private fun AffirmationAppPreview() {
 @Preview
 @Composable
 private fun OneAffirmationPreview() {
-    AffirmationCard(Affirmation(R.string.affirmation1, R.drawable.image1))
+    AffirmationCard(
+        Affirmation(R.string.affirmation1, R.drawable.image1)
+    )
 }
